@@ -7,6 +7,41 @@
 
         <link rel="stylesheet" href="css/main.css" type="text/css" />
 
+        <!-- The script loader -->
+        <script type="text/javascript">
+            //Any scripts to be added, will be added here
+            var scripts = [
+                "engine/animation.js",
+                "engine/canvas.js",
+                "engine/timer.js",
+                "engine/game.js",
+                "engine/fpsLogger.js",
+                "engine/gameStateManager.js",
+                "engine/assetManager.js",
+                "engine/input.js",
+                "engine/particleEffect.js",
+                "engine/tiledMap.js",
+                "engine/camera.js",
+                "engine/mathsUtils.js",
+                "engine/ui/textArea.js",
+                "engine/ui/loadingBar.js",
+                "engine/ui/textButton.js",
+
+                "game.js"
+            ];
+            //Get the head element
+            var head = document.getElementsByTagName("head")[0];
+            //Loop through each script and add that tag to the head
+            scripts.forEach(function (script){
+                //Create the tag and set the attributes
+                var fileRef = document.createElement("script");
+                fileRef.setAttribute("type","text/javascript")
+                fileRef.setAttribute("src", "js/" + script);
+                //Add it to the head
+                head.appendChild(fileRef);
+            });
+        </script>
+
     </head>
 
     <body>
