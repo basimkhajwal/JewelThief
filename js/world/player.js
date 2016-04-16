@@ -3,11 +3,15 @@ var Game = Game || {};
 
 Game.World = Game.World || {};
 
-Game.World.Player = function (x, y) {
+Game.World.Player = function (x, y, world) {
     "use strict";
 
     var vx = 0,
-        vy = 0;
+        vy = 0,
+
+        clamp = function (x, a, b) {
+            return Math.max(a, Math.min(b, x));
+        };
 
     return {
 
@@ -42,6 +46,10 @@ Game.World.Player = function (x, y) {
 
             x += vx * delta;
             y += vy * delta;
+
+            //Clamp position
+            x = clamp(x, this.getWidth() / 2, world.getWidth() - this.getWidth() / 2);
+            y = clamp(y, this.getHeight() / 2, 600 - this.getHeight() / 2);
         },
 
         render: function (canvas) {
@@ -61,11 +69,11 @@ Game.World.Player = function (x, y) {
         },
 
         getWidth: function () {
-            return 20;
+            return 40;
         },
 
         getHeight: function () {
-            return 20;
+            return 40;
         }
 
     };
