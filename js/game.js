@@ -6,7 +6,7 @@ var startGame = function () {
     "use strict";
 
     var game = Engine.Game.create({
-        state: Game.States.Menu.create(),
+        state: Game.States.Menu(),
         width: 1000,
         height: 600,
         devmode: true
