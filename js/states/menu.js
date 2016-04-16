@@ -12,7 +12,7 @@ Game.States.Menu = function () {
         startButton = Engine.UI.TextButton.create(400, 400, 200, 75, "Start Game");
 
     startButton.setClickListener(function () {
-        game.getGameStateManager().setState();
+        game.getGameStateManager().setState(Game.States.Game());
     });
 
     state.onCreate = function (g) {
