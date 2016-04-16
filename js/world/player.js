@@ -50,6 +50,22 @@ Game.World.Player = function (x, y) {
             canvas.arc(x, y, 20, 0, 2 * Math.PI);
             canvas.fill();
             canvas.closePath();
+        },
+
+        getX: function () {
+            return x;
+        },
+
+        getY: function () {
+            return y;
+        },
+
+        getWidth: function () {
+            return 20;
+        },
+
+        getHeight: function () {
+            return 20;
         }
 
     };
