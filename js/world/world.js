@@ -14,7 +14,6 @@ Game.World.World = function (width) {
     return {
 
         update: function (delta) {
-            camera.setX(camera.getX() + 20 * delta);
             player.update(delta);
         },
 
