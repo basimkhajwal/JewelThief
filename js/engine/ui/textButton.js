@@ -6,7 +6,7 @@ Engine.UI = Engine.UI || {};
 Engine.UI.TextButton = {
 
 
-    create: function (buttonX, buttonY, buttonWidth, buttonHeight, textString) {
+    create: function (buttonX, buttonY, buttonWidth, buttonHeight, textString, clickHandle) {
         "use strict";
 
         //The default values
@@ -17,10 +17,11 @@ Engine.UI.TextButton = {
             hoverColour = "#666",
             clickColour = "#222",
 
-            cornerRadius = 0,
+            clickListener = clickHandle || function () { },
 
-        //Private stuff
+            cornerRadius = 0,
             text = Engine.UI.TextArea.create(buttonX + buttonWidth / 2, buttonY + buttonHeight / 2, textString);
+
         text.setColour("#FFF");
         text.setBaseline("middle");
 
@@ -28,7 +29,8 @@ Engine.UI.TextButton = {
         return {
             update: function () {
 
-                var mousePos = Engine.MouseInput.getMousePos();
+                var mousePos = Engine.MouseInput.getMousePos(),
+                    wasClicked = clicked;
 
                 if (mousePos.x > buttonX && mousePos.x < buttonX + buttonWidth && mousePos.y > buttonY && mousePos.y < buttonY + buttonHeight) {
                     mouseOver = true;
@@ -38,6 +40,9 @@ Engine.UI.TextButton = {
                     clicked = false;
                 }
 
+                if (wasClicked && mouseOver && !clicked) {
+                    clickListener();
+                }
             },
 
             render: function (ctx) {
@@ -130,6 +135,10 @@ Engine.UI.TextButton = {
 
             isClicked: function () {
                 return clicked;
+            },
+
+            setClickListener: function (newListener) {
+                clickListener = newListener;
             },
 
             isMouseOver: function () {
