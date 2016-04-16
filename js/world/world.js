@@ -23,13 +23,11 @@ Game.World.World = function (width) {
 
             render: function (canvas) {
 
-                camera.projectContext(canvas);
-
                 canvas.fillStyle = "green";
                 canvas.fillRect(0, 0, 1000, 600);
 
+                camera.projectContext(canvas);
                 player.render(canvas);
-
                 camera.unProjectContext(canvas);
             },
 
