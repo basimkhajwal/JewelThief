@@ -15,9 +15,9 @@ Engine.Keys = {
 
     //The arrow key keys
     LEFT: 37,
-    UP: 40,
+    UP: 38,
     RIGHT: 39,
-    DOWN: 38,
+    DOWN: 40,
 
     getAlphabet: function (c) {
         "use strict";
