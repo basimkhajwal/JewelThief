@@ -9,30 +9,36 @@ Game.World.World = function (width) {
     width = width || 5000;
 
     var camera = Engine.Camera.create(0, 0),
-        player = Game.World.Player(100, 200);
+        player,
 
-    return {
+        world = {
 
-        update: function (delta) {
-            player.update(delta);
+            update: function (delta) {
+                player.update(delta);
 
-            //Make camera follow player clamped to world bounds
-            var clamped = Math.max(500 + player.getWidth() / 2, Math.min(width - player.getWidth() / 2 - 500, player.getX()));
-            camera.setX(clamped - 500);
-        },
+                //Make camera follow player clamped to world bounds
+                var clamped = Math.max(500, Math.min(width - player.getWidth() / 2 - 500, player.getX()));
+                camera.setX(clamped - 500);
+            },
 
-        render: function (canvas) {
+            render: function (canvas) {
 
-            camera.projectContext(canvas);
+                camera.projectContext(canvas);
 
-            canvas.fillStyle = "green";
-            canvas.fillRect(0, 0, 1000, 600);
+                canvas.fillStyle = "green";
+                canvas.fillRect(0, 0, 1000, 600);
 
-            player.render(canvas);
+                player.render(canvas);
 
-            camera.unProjectContext(canvas);
-        }
+                camera.unProjectContext(canvas);
+            },
 
-    };
+            getWidth: function () {
+                return width;
+            }
+        };
 
+    player =  Game.World.Player(100, 200, world);
+
+    return world;
 };
