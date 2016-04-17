@@ -19,6 +19,8 @@ Game.World.Guard = function (startX, startY, world, shape) {
             return Math.max(a, Math.min(b, x));
         },
 
+        surpriseText = Engine.UI.TextArea.create(0, 0, "!", 40, "red", "Lato", 700),
+
         guard = {
 
             alive: true,
@@ -27,6 +29,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
             currentState: 0, // 0 - Idle, 1 - Surprised, 2 - Attacking
             moving: false,
             movingTime: 0,
+            surpriseTime: 0,
 
             update: function (delta) {
 
@@ -42,23 +45,32 @@ Game.World.Guard = function (startX, startY, world, shape) {
                 if (this.currentState === 0) {
 
                     if (dist(player.getX(), player.getY(), this.entity.x, this.entity.y) <= 300) {
-                        //Do stuff
+
+                        this.moving = false;
+                        this.entity.vx = this.entity.vy = 0;
+                        this.currentState = 1;
+                        this.surpriseTime = 1;
+
                     } else if (!this.moving && Math.random() > moveChance) {
 
                         do {
-                            dx = Math.random() * 200 - 100;
+                            dx = Math.random() * 300 - 150;
                         } while (this.entity.x + dx < this.entity.width || this.entity.x + dx > world.getWidth() - this.entity.width);
                         do {
-                            dy = Math.random() * 200 - 100;
+                            dy = Math.random() * 300 - 150;
                         } while (this.entity.y + dy < this.entity.height || this.entity.y + dy > 600 - this.entity.height);
 
                         this.moving = true;
                         this.movingTime = 3;
-                        this.entity.vx = dx / 3;
-                        this.entity.vy = dy / 3;
+                        this.entity.vx = dx / 2;
+                        this.entity.vy = dy / 2;
                     }
 
-
+                } else if (this.currentState === 1) {
+                    this.surpriseTime -= delta;
+                    if (this.surpriseTime <= 0) {
+                        this.currentState = 0;
+                    }
                 }
 
                 this.entity.update(delta);
@@ -73,6 +85,13 @@ Game.World.Guard = function (startX, startY, world, shape) {
             },
 
             render: function (canvas) {
+
+                if (this.currentState === 1) {
+                    surpriseText.setX(this.entity.x);
+                    surpriseText.setY(this.entity.y - this.entity.height / 2 - 3);
+                    surpriseText.render(canvas);
+                }
+
                 this.entity.render(canvas);
             },
 
