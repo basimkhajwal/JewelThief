@@ -7,7 +7,7 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
     return {
 
         shape: 'C',
-        colour: "red",
+        colour: "#c0392b",
         x: ix || 0,
         y: iy || 0,
         vx: 0,
@@ -81,7 +81,9 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
             if (this.shape === 'C') {
                 return (cx - this.x) * (cx - this.x) + (cy - this.y) * (cy - this.y) < this.width * this.width;
             } else {
-                return (cx >= this.x && cx <= this.x + this.width) && (cy >= this.y && cy <= this.y + this.height);
+                var hw = this.width / 2,
+                    hh = this.height / 2;
+                return (cx >= this.x - hw && cx <= this.x + hw) && (cy >= this.y - hh && cy <= this.y + hh);
             }
         }
 
