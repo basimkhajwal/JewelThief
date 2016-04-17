@@ -44,7 +44,7 @@ Game.States.Menu = function () {
         canvas.fillRect(0, 350, 1000, 170);
 
         canvas.fillStyle = "#ecf0f1";
-        canvas.fillRect(0, 520, 1000, 80);
+        canvas.fillRect(300, 535, 400, 45);
 
         shadowTitle.render(canvas);
         title.render(canvas);
