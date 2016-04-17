@@ -1,7 +1,7 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
-Game.World.Entity = function (ix, iy, iwidth, iheight) {
+Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
     "use strict";
 
     return {
@@ -20,6 +20,18 @@ Game.World.Entity = function (ix, iy, iwidth, iheight) {
             //Move
             this.x += this.vx * delta;
             this.y += this.vy * delta;
+
+            var i, removing;
+
+            for (i = 0; i < this.bullets.length; i += 1) {
+                this.bullets[i].update(delta);
+
+                if (this.bullets[i].isFinished()) {
+                    world.renderables.splice(world.renderables.indexOf(this.bullets[i]), 1);
+                    this.bullets.splice(i, 1);
+                    i -= 1;
+                }
+            }
         },
 
         render: function (canvas) {
@@ -52,9 +64,13 @@ Game.World.Entity = function (ix, iy, iwidth, iheight) {
         },
 
         fireBullet: function (speed, lifeTime) {
+            var bullet = Game.World.Bullet(this.x, this.y - 1, speed, lifeTime);
+            this.bullets.push(bullet);
+            world.renderables.push(bullet);
+        },
 
-            this.bullets.push(Game.World.Bullet(this.x, this.y - 1, speed, lifeTime));
-
+        getY: function () {
+            return this.y;
         }
 
     };
