@@ -23,6 +23,10 @@ Game.World.Player = function (startX, startY, world) {
                 getKey = Engine.Keys.getAlphabet,
                 speed = 350,
 
+                i,
+                j,
+                bullet,
+
                 vx = 0,
                 vy = 0;
 
@@ -74,6 +78,19 @@ Game.World.Player = function (startX, startY, world) {
             //Clamp position
             this.entity.x = clamp(this.entity.x, this.entity.width / 2, world.getWidth() - this.entity.width / 2);
             this.entity.y = clamp(this.entity.y, this.entity.height / 2, 600 - this.entity.height / 2);
+
+            for (i = 0; i < this.entity.bullets.length; i += 1) {
+                bullet = this.entity.bullets[i];
+
+                for (j = 0; j < world.guards.length; j += 1) {
+                    if (world.guards[j].entity.collisionFunction(bullet.getX(), bullet.getY())) {
+                        world.guards[j].shootDown();
+                        this.entity.removeBullet(i);
+                        i -= 1;
+                        break;
+                    }
+                }
+            }
         },
 
         render: function (canvas) {

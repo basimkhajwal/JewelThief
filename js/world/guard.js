@@ -10,10 +10,15 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
     var guard = {
 
+        alive: true,
         entity: Game.World.Entity(startX, startY, shape === 'C' ? 40 : 35, shape === 'C' ? 40 : 35, world),
 
         update: function (delta) {
 
+        },
+
+        shootDown: function () {
+            this.alive = false;
         },
 
         render: function (canvas) {
