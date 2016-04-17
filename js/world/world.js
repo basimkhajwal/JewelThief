@@ -10,6 +10,8 @@ Game.World.World = function (width) {
 
     var camera = Engine.Camera.create(0, 0),
         player,
+        i,
+        guard,
         grassDots = (function () {
             var g = [], i;
 
@@ -26,11 +28,25 @@ Game.World.World = function (width) {
             guards: [],
 
             update: function (delta) {
+
+                var clamped;
+
+                //Update the player
                 player.update(delta);
 
                 //Make camera follow player clamped to world bounds
-                var clamped = Math.max(500, Math.min(width - player.getWidth() / 2 - 500, player.getX()));
+                clamped = Math.max(500, Math.min(width - player.getWidth() / 2 - 500, player.getX()));
                 camera.setX(clamped - 500);
+
+                //Remove shot down guards
+                for (i = 0; i < this.guards.length; i += 1) {
+                    this.guards[i].update(delta);
+                    if (!this.guards[i].alive) {
+                        this.renderables.splice(this.renderables.indexOf(this.guards[i]), 1);
+                        this.guards.splice(i, 1);
+                        i -= 1;
+                    }
+                }
 
                 //Sort the renderables
                 this.renderables.sort(function (a, b) {
@@ -67,9 +83,11 @@ Game.World.World = function (width) {
     player =  Game.World.Player(100, 200, world);
     world.renderables.push(player);
 
-    var testGuard = Game.World.Guard(300, 150, world);
-    world.renderables.push(testGuard);
-    world.guards.push(testGuard);
+    for (i = 0; i < 20; i += 1) {
+        guard = Game.World.Guard(Math.random() * width, Math.random() * 600, world);
+        world.renderables.push(guard);
+        world.guards.push(guard);
+    }
 
     return world;
 };
