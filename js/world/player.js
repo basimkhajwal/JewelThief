@@ -59,12 +59,12 @@ Game.World.Player = function (startX, startY, world) {
             wasSpaceDown = keyDown(Engine.Keys.SPACE);
 
             if (!keyDown(getKey('P')) && wasPDown) {
-                this.entity.fireBullet(500);
+                this.entity.fireBullet(0);
             }
             wasPDown = keyDown(getKey('P'));
 
             if (!keyDown(getKey('O')) && wasODown) {
-                this.entity.fireBullet(-500);
+                this.entity.fireBullet(180);
             }
             wasODown = keyDown(getKey('O'));
 
