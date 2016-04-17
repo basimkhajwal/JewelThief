@@ -11,7 +11,7 @@ Game.World.Player = function (startX, startY, world) {
         },
         wasSpaceDown = false,
         wasPDown = false,
-        bulletDirection = 1;
+        wasODown = false;
 
     return {
 
@@ -32,12 +32,10 @@ Game.World.Player = function (startX, startY, world) {
 
             if (keyDown(Engine.Keys.RIGHT) || keyDown(getKey('D'))) {
                 vx += speed;
-                bulletDirection = 1;
             }
 
             if (keyDown(Engine.Keys.LEFT) || keyDown(getKey('A'))) {
                 vx -= speed;
-                bulletDirection = -1;
             }
 
             if (keyDown(Engine.Keys.UP) || keyDown(getKey('W'))) {
@@ -61,9 +59,14 @@ Game.World.Player = function (startX, startY, world) {
             wasSpaceDown = keyDown(Engine.Keys.SPACE);
 
             if (!keyDown(getKey('P')) && wasPDown) {
-                this.entity.fireBullet(bulletDirection * 500, 3);
+                this.entity.fireBullet(500, 3);
             }
             wasPDown = keyDown(getKey('P'));
+
+            if (!keyDown(getKey('O')) && wasODown) {
+                this.entity.fireBullet(-500, 3);
+            }
+            wasODown = keyDown(getKey('O'));
 
             if (vx !== 0 && vy !== 0) {
                 vx /= Math.sqrt(2);
