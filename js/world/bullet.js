@@ -1,6 +1,8 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
+Game.World = Game.World || {};
+
 Game.World.Bullet = function (x, y, angle, speed, lifeTime, isPlayer) {
     "use strict";
 

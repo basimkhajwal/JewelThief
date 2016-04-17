@@ -1,6 +1,8 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
+Game.World = Game.World || {};
+
 Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
     "use strict";
 
