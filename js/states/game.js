@@ -8,8 +8,23 @@ Game.States.Game = function () {
 
     var state = Engine.GameState.create(),
         game,
+        world = Game.World.World(),
 
-        world = Game.World.World();
+        healthSize = 30,
+        healthPad = 15,
+
+        renderHealth = function (canvas, player) {
+
+            var width = player.health * (healthSize + healthPad) - healthPad,
+                startX = 500 - width / 2,
+                i;
+
+            canvas.fillStyle = "#c0392b";
+            for (i = 0; i < player.health; i += 1) {
+                canvas.fillRect(startX + (healthSize + healthPad) * i, 20, healthSize, healthSize);
+            }
+
+        };
 
     state.onCreate = function (g) {
         game = g;
@@ -17,6 +32,8 @@ Game.States.Game = function () {
 
     state.render = function (canvas) {
         world.render(canvas);
+
+        renderHealth(canvas, world.getPlayer());
     };
 
     state.update = function (delta) {
