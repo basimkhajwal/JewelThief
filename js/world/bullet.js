@@ -1,25 +1,45 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
-Game.World.Bullet = function (x, y, speed, lifeTime) {
+Game.World.Bullet = function (x, y, angle, speed, lifeTime) {
     "use strict";
+
+    angle = angle * Math.PI / 180;
+
+    var vx = Math.cos(angle) * speed,
+        vy = Math.sin(angle) * speed,
+
+        rotatedRect = function (canvas, a, b, w, h) {
+            canvas.save();
+
+            canvas.beginPath();
+            canvas.translate(a + w / 2, b + h / 2);
+            canvas.rotate(angle);
+            canvas.rect(-w / 2, -h / 2, w, h);
+            canvas.fill();
+            canvas.closePath();
+
+            canvas.restore();
+        };
 
     return {
 
         update: function (delta) {
             lifeTime -= delta;
-            x += speed * delta;
+
+            x += vx * delta;
+            y += vy * delta;
         },
 
         render: function (canvas) {
 
             canvas.globalAlpha = 0.2;
             canvas.fillStyle = "#2c3e50";
-            canvas.fillRect(x - 4, y + 2, 8, 4);
+            rotatedRect(canvas, x - 4, y + 2, 8, 4);
 
             canvas.globalAlpha = 1;
             canvas.fillStyle = "#2980b9";
-            canvas.fillRect(x - 4, y - 2, 8, 4);
+            rotatedRect(canvas, x - 4, y - 2, 8, 4);
 
         },
 
