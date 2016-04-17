@@ -27,8 +27,7 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
                 this.bullets[i].update(delta);
 
                 if (this.bullets[i].isFinished()) {
-                    world.renderables.splice(world.renderables.indexOf(this.bullets[i]), 1);
-                    this.bullets.splice(i, 1);
+                    this.removeBullet(i);
                     i -= 1;
                 }
             }
@@ -67,6 +66,11 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
             var bullet = Game.World.Bullet(this.x, this.y - 1, speed, lifeTime);
             this.bullets.push(bullet);
             world.renderables.push(bullet);
+        },
+
+        removeBullet: function (bulletIndex) {
+            world.renderables.splice(world.renderables.indexOf(this.bullets[bulletIndex]), 1);
+            this.bullets.splice(bulletIndex, 1);
         },
 
         getY: function () {
