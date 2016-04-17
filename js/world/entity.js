@@ -71,6 +71,14 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
 
         getY: function () {
             return this.y;
+        },
+
+        collisionFunction: function (cx, cy) {
+            if (this.shape === 'C') {
+                return (cx - this.x) * (cx - this.x) + (cy - this.y) * (cy - this.y) < this.width * this.width;
+            } else {
+                return (cx >= this.x && cx <= this.x + this.width) && (cy >= this.y && cy <= this.y + this.height);
+            }
         }
 
     };
