@@ -77,6 +77,10 @@ Game.World.World = function (width) {
 
             getWidth: function () {
                 return width;
+            },
+
+            getPlayer: function () {
+                return player;
             }
         };
 
