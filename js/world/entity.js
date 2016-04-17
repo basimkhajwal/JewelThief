@@ -62,11 +62,12 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
 
         },
 
-        fireBullet: function (angle, speed, lifeTime) {
+        fireBullet: function (angle, isPlayer, speed, lifeTime) {
+            isPlayer = isPlayer || false;
             lifeTime = lifeTime || 3;
             speed = speed || 500;
 
-            var bullet = Game.World.Bullet(this.x, this.y - 1, angle, speed, lifeTime);
+            var bullet = Game.World.Bullet(this.x, this.y - 1, angle, speed, lifeTime, isPlayer);
             this.bullets.push(bullet);
             world.renderables.push(bullet);
         },
