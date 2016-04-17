@@ -23,6 +23,7 @@ Game.World.World = function (width) {
         world = {
 
             renderables: [],
+            guards: [],
 
             update: function (delta) {
                 player.update(delta);
@@ -68,6 +69,7 @@ Game.World.World = function (width) {
 
     var testGuard = Game.World.Guard(300, 150, world);
     world.renderables.push(testGuard);
+    world.guards.push(testGuard);
 
     return world;
 };
