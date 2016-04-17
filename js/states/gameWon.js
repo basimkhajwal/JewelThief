@@ -9,7 +9,7 @@ Game.States.GameWon = function (previousScreen) {
     var state = Engine.GameState.create(),
         game,
 
-        title = Engine.UI.TextArea.create(500, 250, "Game Won", 65, "#2c3e50", "Lato", 900),
+        title = Engine.UI.TextArea.create(500, 250, "Game Won!", 65, "#2c3e50", "Lato", 900),
 
         playAgain = Engine.UI.TextButton.create(300, 300, 400, 100, "Play Again"),
         mainMenu = Engine.UI.TextButton.create(300, 450, 400, 100, "Main Menu"),
