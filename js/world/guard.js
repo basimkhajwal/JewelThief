@@ -30,10 +30,12 @@ Game.World.Guard = function (startX, startY, world, shape) {
             moving: false,
             movingTime: 0,
             surpriseTime: 0,
+            bulletTime: 0,
 
             update: function (delta) {
 
                 var player = world.getPlayer(),
+                    angleToPlayer,
                     dx,
                     dy;
 
@@ -44,7 +46,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
                 if (this.currentState === 0) {
 
-                    if (dist(player.getX(), player.getY(), this.entity.x, this.entity.y) <= 300) {
+                    if (player.entity.shape !== shape && dist(player.getX(), player.getY(), this.entity.x, this.entity.y) <= 300) {
 
                         this.moving = false;
                         this.entity.vx = this.entity.vy = 0;
@@ -61,7 +63,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
                         } while (this.entity.y + dy < this.entity.height || this.entity.y + dy > 600 - this.entity.height);
 
                         this.moving = true;
-                        this.movingTime = 3;
+                        this.movingTime = 2;
                         this.entity.vx = dx / 2;
                         this.entity.vy = dy / 2;
                     }
@@ -69,7 +71,34 @@ Game.World.Guard = function (startX, startY, world, shape) {
                 } else if (this.currentState === 1) {
                     this.surpriseTime -= delta;
                     if (this.surpriseTime <= 0) {
-                        this.currentState = 0;
+                        this.currentState = 2;
+                    }
+                } else if (this.currentState === 2) {
+
+                    angleToPlayer = Math.atan2(this.entity.y - player.entity.y, player.entity.x - this.entity.x);
+                    angleToPlayer *= -1;
+
+                    this.bulletTime -= delta;
+                    if (this.bulletTime <= 0) {
+                        this.bulletTime = 1;
+                        this.entity.fireBullet(angleToPlayer * 180 / Math.PI);
+                    }
+
+                    if (!this.moving) {
+                        do {
+                            dx = Math.random() * 300 - 150;
+                        } while (player.entity.x + dx < this.entity.width || player.entity.x + dx > world.getWidth() - this.entity.width);
+                        do {
+                            dy = Math.random() * 300 - 150;
+                        } while (player.entity.y + dy < this.entity.height || player.entity.y + dy > 600 - this.entity.height);
+
+                        dx += player.entity.x - this.entity.x;
+                        dy += player.entity.y - this.entity.y;
+
+                        this.moving = true;
+                        this.movingTime = 2;
+                        this.entity.vx = dx / 2;
+                        this.entity.vy = dy / 2;
                     }
                 }
 
