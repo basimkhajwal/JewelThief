@@ -58,7 +58,7 @@ Game.States.GameWon = function (previousScreen) {
         wasPlayPressed = playAgain.isClicked();
 
         if (wasMainPressed && !mainMenu.isClicked()) {
-            game.getGameStateManager().setState(Game.States.Menu());
+            game.getGameStateManager().setState(Game.States.Menu(true));
         }
         wasMainPressed = mainMenu.isClicked();
     };

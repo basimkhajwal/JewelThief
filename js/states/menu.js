@@ -3,8 +3,10 @@ var Engine = Engine || {};
 
 Game.States = Game.States || {};
 
-Game.States.Menu = function () {
+Game.States.Menu = function (secondTime) {
     "use strict";
+
+    secondTime = secondTime || false;
 
     var state = Engine.GameState.create(),
         game,
@@ -15,7 +17,7 @@ Game.States.Menu = function () {
         startButton = Engine.UI.TextButton.create(350, 400, 300, 75, "Start Game");
 
     title.setWeight("900");
-    title.setColour("#8e44ad");
+    title.setColour("#A25504");
     shadowTitle.setWeight("900");
     shadowTitle.setColour("#2c3e50");
 
@@ -28,7 +30,7 @@ Game.States.Menu = function () {
     bottomText.setWeight(700);
 
     startButton.setClickListener(function () {
-        game.getGameStateManager().setState(Game.States.Game());
+        game.getGameStateManager().setState(secondTime ? Game.States.Game() : Game.States.Instructions());
     });
 
     state.onCreate = function (g) {
