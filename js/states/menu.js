@@ -41,7 +41,7 @@ Game.States.Menu = function () {
         canvas.fillRect(0, 0, 1000, 600);
 
         canvas.fillStyle = "#f1c40f";
-        canvas.fillRect(0, 350, 1000, 170);
+        canvas.fillRect(0, 375, 1000, 120);
 
         canvas.fillStyle = "#ecf0f1";
         canvas.fillRect(300, 535, 400, 45);
