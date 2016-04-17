@@ -39,7 +39,8 @@ Game.World.Guard = function (startX, startY, world, shape) {
                     dx,
                     dy,
                     i,
-                    bullet;
+                    bullet,
+                    other;
 
                 if (this.moving && (this.movingTime -= delta) <= 0) {
                     this.moving = false;
@@ -48,7 +49,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
                 if (this.currentState === 0) {
 
-                    if (player.entity.shape !== shape && dist(player.getX(), player.getY(), this.entity.x, this.entity.y) <= 300) {
+                    if (player.entity.shape !== shape && dist(player.getX(), player.getY(), this.entity.x, this.entity.y) <= 400) {
 
                         this.moving = false;
                         this.entity.vx = this.entity.vy = 0;
@@ -68,6 +69,18 @@ Game.World.Guard = function (startX, startY, world, shape) {
                         this.movingTime = 2;
                         this.entity.vx = dx / 2;
                         this.entity.vy = dy / 2;
+                    }
+
+                    for (i = 0; i < world.guards.length; i += 1) {
+                        other = world.guards[i];
+
+                        if (other !== this && other.currentState === 2 && dist(other.entity.x, other.entity.y, this.entity.x, this.entity.y) <= 200) {
+                            this.moving = false;
+                            this.entity.vx = this.entity.vy = 0;
+                            this.currentState = 1;
+                            this.surpriseTime = 1;
+                            break;
+                        }
                     }
 
                 } else if (this.currentState === 1) {
