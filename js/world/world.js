@@ -87,7 +87,7 @@ Game.World.World = function (width) {
     player =  Game.World.Player(100, 200, world);
     world.renderables.push(player);
 
-    for (i = 0; i < 20; i += 1) {
+    for (i = 0; i < 1; i += 1) {
         guard = Game.World.Guard(Math.random() * width, Math.random() * 600, world);
         world.renderables.push(guard);
         world.guards.push(guard);
