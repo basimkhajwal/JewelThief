@@ -14,6 +14,7 @@ Game.World.Entity = function (ix, iy, iwidth, iheight) {
         vy: 0,
         width: iwidth || 10,
         height: iheight || 10,
+        bullets: [],
 
         update: function (delta) {
             //Move
@@ -39,9 +40,20 @@ Game.World.Entity = function (ix, iy, iwidth, iheight) {
                 canvas.closePath();
             } else {
 
+                canvas.globalAlpha = 0.2;
+                canvas.fillStyle = "#2c3e50";
+                canvas.fillRect(this.x - this.width / 2 + 2, this.y, this.width - 4, this.height * 0.8);
+
+                canvas.globalAlpha = 1;
                 canvas.fillStyle = this.colour;
                 canvas.fillRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
             }
+
+        },
+
+        fireBullet: function (speed, lifeTime) {
+
+            this.bullets.push(Game.World.Bullet(this.x, this.y - 1, speed, lifeTime));
 
         }
 
