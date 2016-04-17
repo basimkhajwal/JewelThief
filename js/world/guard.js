@@ -80,16 +80,16 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
                     this.bulletTime -= delta;
                     if (this.bulletTime <= 0) {
-                        this.bulletTime = 1;
+                        this.bulletTime = 0.5;
                         this.entity.fireBullet(angleToPlayer * 180 / Math.PI);
                     }
 
                     if (!this.moving) {
                         do {
-                            dx = Math.random() * 300 - 150;
+                            dx = Math.random() * 100 - 50;
                         } while (player.entity.x + dx < this.entity.width || player.entity.x + dx > world.getWidth() - this.entity.width);
                         do {
-                            dy = Math.random() * 300 - 150;
+                            dy = Math.random() * 100 - 50;
                         } while (player.entity.y + dy < this.entity.height || player.entity.y + dy > 600 - this.entity.height);
 
                         dx += player.entity.x - this.entity.x;
@@ -111,6 +111,10 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
             shootDown: function () {
                 this.alive = false;
+
+                while (this.entity.bullets.length !== 0) {
+                    this.entity.removeBullet(0);
+                }
             },
 
             render: function (canvas) {
