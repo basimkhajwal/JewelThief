@@ -39,7 +39,7 @@ Game.World.Bullet = function (x, y, angle, speed, lifeTime, isPlayer) {
             rotatedRect(canvas, x - 4, y + 2, 8, 4);
 
             canvas.globalAlpha = 1;
-            canvas.fillStyle = "#2980b9";
+            canvas.fillStyle = isPlayer ? "#2980b9" : "#27ae60";
             rotatedRect(canvas, x - 4, y - 2, 8, 4);
 
         },
