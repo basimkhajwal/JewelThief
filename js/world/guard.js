@@ -37,7 +37,9 @@ Game.World.Guard = function (startX, startY, world, shape) {
                 var player = world.getPlayer(),
                     angleToPlayer,
                     dx,
-                    dy;
+                    dy,
+                    i,
+                    bullet;
 
                 if (this.moving && (this.movingTime -= delta) <= 0) {
                     this.moving = false;
@@ -107,6 +109,15 @@ Game.World.Guard = function (startX, startY, world, shape) {
                 //Clamp position
                 this.entity.x = clamp(this.entity.x, this.entity.width / 2, world.getWidth() - this.entity.width / 2);
                 this.entity.y = clamp(this.entity.y, this.entity.height / 2, 600 - this.entity.height / 2);
+
+                for (i = 0; i < this.entity.bullets.length; i += 1) {
+                    bullet = this.entity.bullets[i];
+
+                    if (player.entity.collisionFunction(bullet.getX(), bullet.getY())) {
+                        player.shootDown();
+                        this.entity.removeBullet(i);
+                    }
+                }
             },
 
             shootDown: function () {
