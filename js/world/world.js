@@ -22,12 +22,19 @@ Game.World.World = function (width) {
 
         world = {
 
+            renderables: [],
+
             update: function (delta) {
                 player.update(delta);
 
                 //Make camera follow player clamped to world bounds
                 var clamped = Math.max(500, Math.min(width - player.getWidth() / 2 - 500, player.getX()));
                 camera.setX(clamped - 500);
+
+                //Sort the renderables
+                this.renderables.sort(function (a, b) {
+                    return a.getY() - b.getY();
+                });
             },
 
             render: function (canvas) {
@@ -44,7 +51,10 @@ Game.World.World = function (width) {
                     canvas.fillRect(grassDots[i].x, grassDots[i].y, 5, 5);
                 }
 
-                player.render(canvas);
+                for (i = 0; i < this.renderables.length; i += 1) {
+                    this.renderables[i].render(canvas);
+                }
+
                 camera.unProjectContext(canvas);
             },
 
@@ -54,6 +64,7 @@ Game.World.World = function (width) {
         };
 
     player =  Game.World.Player(100, 200, world);
+    world.renderables.push(player);
 
     return world;
 };
