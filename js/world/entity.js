@@ -62,10 +62,11 @@ Game.World.Entity = function (ix, iy, iwidth, iheight, world) {
 
         },
 
-        fireBullet: function (speed, lifeTime) {
+        fireBullet: function (angle, speed, lifeTime) {
             lifeTime = lifeTime || 3;
+            speed = speed || 500;
 
-            var bullet = Game.World.Bullet(this.x, this.y - 1, speed, lifeTime);
+            var bullet = Game.World.Bullet(this.x, this.y - 1, angle, speed, lifeTime);
             this.bullets.push(bullet);
             world.renderables.push(bullet);
         },
