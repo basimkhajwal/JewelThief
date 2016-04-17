@@ -32,8 +32,11 @@ Game.States.Game = function () {
 
     state.render = function (canvas) {
         world.render(canvas);
-
         renderHealth(canvas, world.getPlayer());
+
+        if (world.getPlayer().health === 0) {
+            game.getGameStateManager().setState(Game.States.GameOver(canvas.getImageData(0, 0, 1000, 600)));
+        }
     };
 
     state.update = function (delta) {
