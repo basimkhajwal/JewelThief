@@ -53,8 +53,19 @@ Game.World.Player = function (x, y, world) {
         },
 
         render: function (canvas) {
+
+            canvas.globalAlpha = 0.2;
+
             canvas.beginPath();
-            canvas.fillStyle = "red";
+            canvas.fillStyle = "#2c3e50";
+            canvas.ellipse(x, y + this.getHeight() / 2, 20, 10, 0, 0, 2 * Math.PI);
+            canvas.fill();
+            canvas.closePath();
+
+            canvas.globalAlpha = 1;
+
+            canvas.beginPath();
+            canvas.fillStyle = "#c0392b";
             canvas.arc(x, y, 20, 0, 2 * Math.PI);
             canvas.fill();
             canvas.closePath();
