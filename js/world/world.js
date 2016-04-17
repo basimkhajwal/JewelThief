@@ -66,5 +66,8 @@ Game.World.World = function (width) {
     player =  Game.World.Player(100, 200, world);
     world.renderables.push(player);
 
+    var testGuard = Game.World.Guard(300, 150, world);
+    world.renderables.push(testGuard);
+
     return world;
 };
