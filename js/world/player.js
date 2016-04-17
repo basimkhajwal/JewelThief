@@ -3,25 +3,25 @@ var Game = Game || {};
 
 Game.World = Game.World || {};
 
-Game.World.Player = function (x, y, world) {
+Game.World.Player = function (startX, startY, world) {
     "use strict";
 
-    var vx = 0,
-        vy = 0,
-
-        clamp = function (x, a, b) {
-            return Math.max(a, Math.min(b, x));
-        };
+    var clamp = function (x, a, b) {
+        return Math.max(a, Math.min(b, x));
+    };
 
     return {
+
+        entity: Game.World.Entity(startX, startY, 40, 40),
 
         update: function (delta) {
 
             var keyDown = Engine.KeyboardInput.isKeyDown,
                 getKey = Engine.Keys.getAlphabet,
-                speed = 350;
+                speed = 350,
 
-            vx = vy = 0;
+                vx = 0,
+                vy = 0;
 
             if (keyDown(Engine.Keys.RIGHT) || keyDown(getKey('D'))) {
                 vx += speed;
@@ -44,47 +44,34 @@ Game.World.Player = function (x, y, world) {
                 vy /= Math.sqrt(2);
             }
 
-            x += vx * delta;
-            y += vy * delta;
+            this.entity.vx = vx;
+            this.entity.vy = vy;
+
+            this.entity.update(delta);
 
             //Clamp position
-            x = clamp(x, this.getWidth() / 2, world.getWidth() - this.getWidth() / 2);
-            y = clamp(y, this.getHeight() / 2, 600 - this.getHeight() / 2);
+            this.entity.x = clamp(this.entity.x, this.entity.width / 2, world.getWidth() - this.entity.width / 2);
+            this.entity.y = clamp(this.entity.y, this.entity.height / 2, 600 - this.entity.height / 2);
         },
 
         render: function (canvas) {
-
-            canvas.globalAlpha = 0.2;
-
-            canvas.beginPath();
-            canvas.fillStyle = "#2c3e50";
-            canvas.ellipse(x, y + this.getHeight() / 2, 20, 10, 0, 0, 2 * Math.PI);
-            canvas.fill();
-            canvas.closePath();
-
-            canvas.globalAlpha = 1;
-
-            canvas.beginPath();
-            canvas.fillStyle = "#c0392b";
-            canvas.arc(x, y, 20, 0, 2 * Math.PI);
-            canvas.fill();
-            canvas.closePath();
+            this.entity.render(canvas);
         },
 
         getX: function () {
-            return x;
+            return this.entity.x;
         },
 
         getY: function () {
-            return y;
+            return this.entity.y;
         },
 
         getWidth: function () {
-            return 40;
+            return this.entity.width;
         },
 
         getHeight: function () {
-            return 40;
+            return this.entity.height;
         }
 
     };
