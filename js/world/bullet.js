@@ -13,6 +13,11 @@ Game.World.Bullet = function (x, y, speed, lifeTime) {
 
         render: function (canvas) {
 
+            canvas.globalAlpha = 0.2;
+            canvas.fillStyle = "#2c3e50";
+            canvas.fillRect(x - 4, y + 2, 8, 4);
+
+            canvas.globalAlpha = 1;
             canvas.fillStyle = "#2980b9";
             canvas.fillRect(x - 4, y - 2, 8, 4);
 
