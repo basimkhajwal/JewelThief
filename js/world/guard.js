@@ -26,7 +26,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
             alive: true,
             entity: Game.World.Entity(startX, startY, shape === 'C' ? 40 : 35, shape === 'C' ? 40 : 35, world),
 
-            currentState: 0, // 0 - Idle, 1 - Surprised, 2 - Attacking
+            currentState: 0, // 0 - Idle, 1 - Surprised, 2 - Attacking, otherwise dead
             moving: false,
             movingTime: 0,
             surpriseTime: 0,
@@ -122,6 +122,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
 
             shootDown: function () {
                 this.alive = false;
+                this.currentState = 3;
 
                 while (this.entity.bullets.length !== 0) {
                     this.entity.removeBullet(0);
