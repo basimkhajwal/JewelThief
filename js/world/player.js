@@ -16,6 +16,7 @@ Game.World.Player = function (startX, startY, world) {
     return {
 
         entity: Game.World.Entity(startX, startY, 40, 40, world),
+        health: 5,
 
         update: function (delta) {
 
@@ -98,6 +99,10 @@ Game.World.Player = function (startX, startY, world) {
 
         render: function (canvas) {
             this.entity.render(canvas);
+        },
+
+        shootDown: function () {
+            this.health -= 1;
         },
 
         getX: function () {
