@@ -6,7 +6,7 @@ Game.World = Game.World || {};
 Game.World.World = function (width) {
     "use strict";
 
-    width = width || 1000;
+    width = width || 5000;
 
     var camera = Engine.Camera.create(0, 0),
         player,
@@ -122,6 +122,10 @@ Game.World.World = function (width) {
                 camera.unProjectContext(canvas);
             },
 
+            isWon: function () {
+                return player.entity.collisionFunction(width - 130, 300);
+            },
+
             getWidth: function () {
                 return width - 100;
             },
@@ -134,7 +138,7 @@ Game.World.World = function (width) {
     player =  Game.World.Player(100, 200, world);
     world.renderables.push(player);
 
-    for (i = 0; i < 2; i += 1) {
+    for (i = 0; i < 20; i += 1) {
         guard = Game.World.Guard(Math.random() * width, Math.random() * 600, world);
         world.renderables.push(guard);
         world.guards.push(guard);
