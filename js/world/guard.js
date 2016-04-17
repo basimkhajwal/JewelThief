@@ -9,7 +9,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
     shape = shape || (Math.random() > 0.5 ? 'C' : 'R');
 
     var viewDistance = 300,
-        moveChance = (1 / 3) * (1 / 60),
+        moveChance = (1 / 2) * (1 / 60),
 
         dist = function (a, b, x, y) {
             return Math.sqrt((x - a) * (x - a) + (y - b) * (y - b));
@@ -55,7 +55,7 @@ Game.World.Guard = function (startX, startY, world, shape) {
                         this.currentState = 1;
                         this.surpriseTime = 1;
 
-                    } else if (!this.moving && Math.random() > moveChance) {
+                    } else if (!this.moving && Math.random() < moveChance) {
 
                         do {
                             dx = Math.random() * 300 - 150;
