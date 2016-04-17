@@ -1,6 +1,8 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
+Game.States = Game.States || {};
+
 Game.States.Loading = function () {
     "use strict";
 
