@@ -3,34 +3,42 @@ var Game = Game || {};
 
 Game.World = Game.World || {};
 
-Game.World.Guard = function (x, y) {
+Game.World.Guard = function (startX, startY, world, shape) {
     "use strict";
 
-    return {
+    shape = shape || (Math.random() > 0.5 ? 'C' : 'R');
+
+    var guard = {
+
+        entity: Game.World.Entity(startX, startY, shape === 'C' ? 40 : 35, shape === 'C' ? 40 : 35, world),
 
         update: function (delta) {
 
         },
 
         render: function (canvas) {
-
+            this.entity.render(canvas);
         },
 
         getX: function () {
-            return x;
+            return this.entity.x;
         },
 
         getY: function () {
-            return y;
+            return this.entity.y;
         },
 
         getWidth: function () {
-            return 40;
+            return this.entity.width;
         },
 
         getHeight: function () {
-            return 40;
+            return this.entity.height;
         }
     };
 
+    guard.entity.shape = shape;
+    guard.entity.colour = "#16a085";
+
+    return guard;
 };
