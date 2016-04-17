@@ -1,10 +1,11 @@
 var Engine = Engine || {};
 var Game = Game || {};
 
-Game.World.Bullet = function (x, y, angle, speed, lifeTime) {
+Game.World.Bullet = function (x, y, angle, speed, lifeTime, isPlayer) {
     "use strict";
 
     angle = angle * Math.PI / 180;
+    isPlayer = isPlayer || false;
 
     var vx = Math.cos(angle) * speed,
         vy = Math.sin(angle) * speed,
@@ -53,6 +54,10 @@ Game.World.Bullet = function (x, y, angle, speed, lifeTime) {
 
         getY: function () {
             return y;
+        },
+
+        isPlayerBullet: function () {
+            return isPlayer;
         }
 
     };
