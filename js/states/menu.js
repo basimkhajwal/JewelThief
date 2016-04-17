@@ -8,8 +8,24 @@ Game.States.Menu = function () {
 
     var state = Engine.GameState.create(),
         game,
-        title = Engine.UI.TextArea.create(500, 100, "Jewel Thief (work in progress)", 20, "#000", "Monospace"),
-        startButton = Engine.UI.TextButton.create(400, 400, 200, 75, "Start Game");
+        title = Engine.UI.TextArea.create(500, 250, "Jewel Thief", 70, "#000", "Lato"),
+        shadowTitle = Engine.UI.TextArea.create(500, 249, "Jewel Thief", 70, "rgba(0,0,0,0.5)", "Lato"),
+        bottomText = Engine.UI.TextArea.create(500, 570, "Made in 48 hours for LD35", 25, "#8e44ad", "Lato"),
+
+        startButton = Engine.UI.TextButton.create(350, 400, 300, 75, "Start Game");
+
+    title.setWeight("900");
+    title.setColour("#8e44ad");
+    shadowTitle.setWeight("900");
+    shadowTitle.setColour("#2c3e50");
+
+    startButton.setCornerRadius(25);
+    startButton.setColour("#d35400");
+    startButton.getText().setSize(30);
+    startButton.getText().setFamily("Lato");
+    startButton.getText().setWeight(700);
+
+    bottomText.setWeight(700);
 
     startButton.setClickListener(function () {
         game.getGameStateManager().setState(Game.States.Game());
@@ -20,7 +36,20 @@ Game.States.Menu = function () {
     };
 
     state.render = function (canvas) {
+
+        canvas.fillStyle = "#f39c12";
+        canvas.fillRect(0, 0, 1000, 600);
+
+        canvas.fillStyle = "#f1c40f";
+        canvas.fillRect(0, 350, 1000, 170);
+
+        canvas.fillStyle = "#ecf0f1";
+        canvas.fillRect(0, 520, 1000, 80);
+
+        shadowTitle.render(canvas);
         title.render(canvas);
+        bottomText.render(canvas);
+
         startButton.render(canvas);
     };
 
